@@ -1,0 +1,16 @@
+[package]
+name = "xatlas-rs"
+version = "0.1.0"
+authors = ["Jasper-Bekkers <bekkers@gmail.com>"]
+edition = "2018"
+build = "build.rs"
+
+[dependencies]
+
+
+
+[build-dependencies]
+cc = { version = "1.0.25", features = ["parallel"] }
+
+[build-dependencies.bindgen]
+version = "0.48.1"

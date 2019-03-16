@@ -7,6 +7,7 @@ use std::ops::Drop;
 
 use crate::bindings::*;
 
+#[derive(Debug)]
 enum IndexFormat {
     Uint16,
     Uint32,
@@ -19,7 +20,7 @@ impl Default for IndexFormat {
 }
 
 #[repr(C)]
-#[derive(Default)]
+#[derive(Default, Debug)]
 struct MeshDecl {
     vertex_count: u32,
     vertex_position_data: Vec<f32>,
@@ -36,13 +37,35 @@ struct MeshDecl {
     face_ignore_data: Vec<bool>,
 }
 
+#[derive(Debug)]
+struct Chart<'a> {
+    atlas_index: u32,
+    indices: &'a [u32],
+}
+
+#[repr(C)]
+#[derive(Debug)]
+struct Vertex {
+    atlas_index: u32,
+    uv: [f32;2],
+    xref: u32,
+}
+
+#[derive(Debug)]
+struct Mesh<'a> {
+    charts: Vec<Chart<'a>>, // need to translate Chart so it's owned
+    indices: &'a [u32],
+    vertices: &'a [Vertex],
+}
+
+#[derive(Debug)]
 struct Xatlas {
     handle: *mut root::xatlas::Atlas,
 }
 
-impl Xatlas {
-    fn new() -> Xatlas {
-        Xatlas {
+impl<'a> Xatlas {
+    fn new() -> Self {
+        Self {
             handle: unsafe { xatlas::Create() },
         }
     }
@@ -87,7 +110,10 @@ impl Xatlas {
         }
     }
 
-    pub fn generate(&self) {
+    pub fn generate<F>(&self, mut progress: F) 
+    where
+        F: FnMut(u32, u32),
+    {
         let chart_ops = xatlas::ChartOptions {
             proxyFitMetricWeight: 2.0,
             roundnessMetricWeight: 0.01,
@@ -111,35 +137,69 @@ impl Xatlas {
             padding: 0,
         };
 
+        unsafe extern "C" fn progress_cb(
+            category: root::xatlas::ProgressCategory_Enum,
+            progress: ::std::os::raw::c_int,
+            userData: *mut ::std::os::raw::c_void,
+        ) {
+            let cb: *mut &mut FnMut(u32, u32) = unsafe { std::mem::transmute(userData) };
+            (*cb)(0, progress as u32);
+        }
+
+        let mut cb: &mut FnMut(u32, u32) = &mut progress;
+        let cb = &mut cb as *mut &mut FnMut(u32, u32);
+
         unsafe {
             xatlas::Generate(
                 self.handle,
                 chart_ops,
                 None,
                 pack_opts,
-                None,
-                std::ptr::null_mut(),
+                Some(progress_cb),
+                cb as *mut std::ffi::c_void,
             )
         }
     }
 
-    fn print(&self) {
-        unsafe {
-            for idx in 0..(*self.handle).meshCount {
-                let mesh =  std::ptr::read((*self.handle).meshes.offset(idx as isize));
-                println!("{}", idx);
-                println!("{:?}", mesh);
+    fn meshes(&mut self) -> Vec<Mesh<'a>> {
+        // shallow copy most data
+        let mut meshes = vec![];
 
-                let vertex_array = std::slice::from_raw_parts(
-                    mesh.vertexArray,
-                    mesh.vertexCount as usize);
-                dbg!(vertex_array);
+        let original_meshes = unsafe {
+            std::slice::from_raw_parts((*self.handle).meshes, (*self.handle).meshCount as usize)
+        };
+
+        for original_mesh  in original_meshes {
+            let mut charts = vec![];
+            let original_charts = unsafe {
+                std::slice::from_raw_parts(original_mesh.chartArray, original_mesh.chartCount as usize)
+            };
+
+            for original_chart in original_charts {
+                charts.push(Chart{
+                    atlas_index: original_chart.atlasIndex,
+                    indices: unsafe {
+                        std::slice::from_raw_parts(original_chart.indexArray, original_chart.indexCount as usize)
+                    },
+                })
             }
+
+            meshes.push(Mesh {
+                indices: unsafe {
+                    std::slice::from_raw_parts(original_mesh.indexArray, original_mesh.indexCount as usize)
+                },
+                vertices: unsafe {
+                    std::slice::from_raw_parts(original_mesh.vertexArray as *mut _ as *mut _, original_mesh.vertexCount as usize)
+                },
+                charts
+            });
         }
+
+        meshes
     }
 }
 
-impl Drop for Xatlas {
+impl<'a> Drop for Xatlas {
     fn drop(&mut self) {
         unsafe {
             xatlas::Destroy(self.handle);
@@ -148,7 +208,7 @@ impl Drop for Xatlas {
 }
 
 fn main() {
-    let atlas = Xatlas::new();
+    let mut atlas = Xatlas::new();
 
     let mut decl = MeshDecl::default();
     decl.vertex_count = 3;
@@ -156,13 +216,15 @@ fn main() {
         0.0, 0.0, 0.0, //
         0.0, 1.0, 1.0, //
         0.0, 1.0, 0.0, //
-    ]; 
+    ];
     decl.vertex_position_stride = (std::mem::size_of::<f32>() * 3) as u32;
     decl.index_count = 3;
     decl.index_data = vec![0, 1, 2];
     decl.index_format = IndexFormat::Uint32;
 
     atlas.add_mesh(&decl);
-    atlas.generate();
-    atlas.print();
+    atlas.generate(|_, p|{println!("Hi {}", p)});
+    let meshes = atlas.meshes();
+
+    dbg!(meshes);
 }

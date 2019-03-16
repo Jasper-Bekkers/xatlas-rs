@@ -7,6 +7,8 @@ use std::ops::Drop;
 
 use crate::bindings::*;
 
+// jb-todo: find a way to call ParameterizeFunc wrapped in a closure
+
 #[derive(Debug)]
 enum IndexFormat {
     Uint16,
@@ -17,6 +19,15 @@ impl Default for IndexFormat {
     fn default() -> IndexFormat {
         IndexFormat::Uint16
     }
+}
+
+#[repr(C)]
+#[derive(Debug)]
+enum ProgressCategory {
+    ComputeCharts,
+    ParameterizeCharts,
+    PackCharts,
+    BuildOutputMeshes
 }
 
 #[repr(C)]
@@ -110,9 +121,9 @@ impl<'a> Xatlas {
         }
     }
 
-    pub fn generate<F>(&self, mut progress: F) 
+    pub fn generate<F>(&self, mut progress: Option<F>) 
     where
-        F: FnMut(u32, u32),
+        F: FnMut(ProgressCategory, i32),
     {
         let chart_ops = xatlas::ChartOptions {
             proxyFitMetricWeight: 2.0,
@@ -140,24 +151,42 @@ impl<'a> Xatlas {
         unsafe extern "C" fn progress_cb(
             category: root::xatlas::ProgressCategory_Enum,
             progress: ::std::os::raw::c_int,
-            userData: *mut ::std::os::raw::c_void,
+            user_data: *mut ::std::os::raw::c_void,
         ) {
-            let cb: *mut &mut FnMut(u32, u32) = unsafe { std::mem::transmute(userData) };
-            (*cb)(0, progress as u32);
+            let cb: *mut &mut FnMut(ProgressCategory, i32) = unsafe { std::mem::transmute(user_data) };
+            (*cb)(match category {
+                ProgressCategory_Enum_ComputeCharts => ProgressCategory::ComputeCharts,
+                ProgressCategory_Enum_ParameterizeCharts => ProgressCategory::ParameterizeCharts,
+                ProgressCategory_Enum_PackCharts => ProgressCategory::PackCharts,
+                ProgressCategory_Enum_BuildOutputMeshes => ProgressCategory::BuildOutputMeshes,
+            }, progress);
         }
 
-        let mut cb: &mut FnMut(u32, u32) = &mut progress;
-        let cb = &mut cb as *mut &mut FnMut(u32, u32);
+        if let Some(mut progress) = progress {
+            let mut cb: &mut FnMut(ProgressCategory, i32) = &mut progress;
+            let cb = &mut cb as *mut &mut FnMut(ProgressCategory, i32);
 
-        unsafe {
-            xatlas::Generate(
-                self.handle,
-                chart_ops,
-                None,
-                pack_opts,
-                Some(progress_cb),
-                cb as *mut std::ffi::c_void,
-            )
+            unsafe {
+                xatlas::Generate(
+                    self.handle,
+                    chart_ops,
+                    None,
+                    pack_opts,
+                    Some(progress_cb),
+                    cb as *mut std::ffi::c_void,
+                )
+            }
+        } else {
+            unsafe {
+                xatlas::Generate(
+                    self.handle,
+                    chart_ops,
+                    None,
+                    pack_opts,
+                    None,
+                    std::ptr::null_mut(),
+                )
+            }
         }
     }
 
@@ -223,7 +252,7 @@ fn main() {
     decl.index_format = IndexFormat::Uint32;
 
     atlas.add_mesh(&decl);
-    atlas.generate(|_, p|{println!("Hi {}", p)});
+    atlas.generate(Some(|_, p|{println!("Hi {}", p)}));
     let meshes = atlas.meshes();
 
     dbg!(meshes);

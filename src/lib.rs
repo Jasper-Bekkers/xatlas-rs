@@ -10,7 +10,7 @@ use crate::bindings::*;
 // jb-todo: find a way to call ParameterizeFunc wrapped in a closure
 
 #[derive(Debug)]
-enum IndexFormat {
+pub enum IndexFormat {
     Uint16,
     Uint32,
 }
@@ -21,9 +21,10 @@ impl Default for IndexFormat {
     }
 }
 
+// xatlas makes internal copies of all of these so just passing references to slices is more then enough
 #[repr(C)]
 #[derive(Debug)]
-enum ProgressCategory {
+pub enum ProgressCategory {
     ComputeCharts,
     ParameterizeCharts,
     PackCharts,
@@ -32,23 +33,22 @@ enum ProgressCategory {
 
 #[repr(C)]
 #[derive(Default, Debug)]
-struct MeshDecl {
-    vertex_count: u32,
-    vertex_position_data: Vec<f32>,
-    vertex_position_stride: u32,
-
-    vertex_normal_data: Vec<u8>,
-    vertex_normal_stride: u32,
-    vertex_uv_data: Vec<u8>,
-    vertex_uv_stride: u32,
-    index_count: u32,
-    index_data: Vec<u32>, // jb-todo
-    index_offset: i32,
-    index_format: IndexFormat,
-    face_ignore_data: Vec<bool>,
+pub struct MeshDecl<'a> {
+    pub vertex_count: u32,
+    pub vertex_position_data: &'a [u8],
+    pub vertex_position_stride: u32,
+    pub vertex_normal_data: &'a [u8],
+    pub vertex_normal_stride: u32,
+    pub vertex_uv_data: &'a [u8],
+    pub vertex_uv_stride: u32,
+    pub index_count: u32,
+    pub index_data: &'a [u8],
+    pub index_offset: i32,
+    pub index_format: IndexFormat,
+    pub face_ignore_data: &'a [bool],
 }
 
-struct ChartOptions {
+pub struct ChartOptions {
     proxy_fit_metric_weight: f32,
     roundness_metric_weight: f32,
     straightness_metric_weight: f32,
@@ -95,7 +95,7 @@ impl Default for ChartOptions {
     }
 }
 
-struct PackOptions {
+pub struct PackOptions {
     pub attempts: i32,
     pub texels_per_unit: f32,
     pub resolution: u32,
@@ -134,28 +134,28 @@ impl Default for PackOptions {
 }
 
 #[derive(Debug)]
-struct Chart<'a> {
-    atlas_index: u32,
-    indices: &'a [u32],
+pub struct Chart<'a> {
+    pub atlas_index: u32,
+    pub indices: &'a [u32],
 }
 
 #[repr(C)]
 #[derive(Debug)]
-struct Vertex {
-    atlas_index: u32,
-    uv: [f32;2],
-    xref: u32,
+pub struct Vertex {
+    pub atlas_index: u32,
+    pub uv: [f32;2],
+    pub xref: u32,
 }
 
 #[derive(Debug)]
-struct Mesh<'a> {
-    charts: Vec<Chart<'a>>, // need to translate Chart so it's owned
-    indices: &'a [u32],
-    vertices: &'a [Vertex],
+pub struct Mesh<'a> {
+    pub charts: Vec<Chart<'a>>, // need to translate Chart so it's owned
+    pub indices: &'a [u32],
+    pub vertices: &'a [Vertex],
 }
 
 #[derive(Debug)]
-struct Xatlas {
+pub struct Xatlas {
     handle: *mut root::xatlas::Atlas,
 }
 
@@ -165,6 +165,8 @@ unsafe extern "C" fn progress_cb(
     user_data: *mut ::std::os::raw::c_void,
 ) {
     let cb: *mut &mut FnMut(ProgressCategory, i32) = unsafe { std::mem::transmute(user_data) };
+
+    #[allow(non_snake_case)]
     (*cb)(match category {
         ProgressCategory_Enum_ComputeCharts => ProgressCategory::ComputeCharts,
         ProgressCategory_Enum_ParameterizeCharts => ProgressCategory::ParameterizeCharts,
@@ -174,7 +176,7 @@ unsafe extern "C" fn progress_cb(
 }
 
 impl<'a> Xatlas {
-    fn new() -> Self {
+    pub fn new() -> Self {
         Self {
             handle: unsafe { xatlas::Create() },
         }
@@ -258,7 +260,7 @@ impl<'a> Xatlas {
         }
     }
 
-    fn meshes(&mut self) -> Vec<Mesh<'a>> {
+    pub fn meshes(&mut self) -> Vec<Mesh<'a>> {
         // shallow copy most data
         let mut meshes = vec![];
 
@@ -302,27 +304,4 @@ impl<'a> Drop for Xatlas {
             xatlas::Destroy(self.handle);
         }
     }
-}
-
-fn main() {
-    let mut atlas = Xatlas::new();
-
-    let mut decl = MeshDecl::default();
-    decl.vertex_count = 3;
-    decl.vertex_position_data = vec![
-        0.0, 0.0, 0.0, //
-        0.0, 1.0, 1.0, //
-        0.0, 1.0, 0.0, //
-    ];
-    decl.vertex_position_stride = (std::mem::size_of::<f32>() * 3) as u32;
-    decl.index_count = 3;
-    decl.index_data = vec![0, 1, 2];
-    decl.index_format = IndexFormat::Uint32;
-
-    atlas.add_mesh(&decl);
-    atlas.generate_simple(Default::default(), Default::default());
-
-    let meshes = atlas.meshes();
-
-    dbg!(meshes);
 }

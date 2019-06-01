@@ -48,6 +48,7 @@ pub struct MeshDecl<'a> {
     pub face_ignore_data: &'a [bool],
 }
 
+#[derive(Debug)]
 pub struct ChartOptions {
     proxy_fit_metric_weight: f32,
     roundness_metric_weight: f32,
@@ -95,6 +96,7 @@ impl Default for ChartOptions {
     }
 }
 
+#[derive(Debug)]
 pub struct PackOptions {
     pub attempts: i32,
     pub texels_per_unit: f32,

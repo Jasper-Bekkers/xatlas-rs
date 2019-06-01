@@ -104,7 +104,7 @@ pub struct PackOptions {
     pub max_chart_size: u32,
     pub block_align: bool,
     pub conservative: bool,
-    pub padding: i32,
+    pub padding: u32,
 }
 
 impl PackOptions {

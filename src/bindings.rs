@@ -112,15 +112,6 @@ pub mod root {
         }
         #[repr(C)]
         #[derive(Debug, Copy, Clone)]
-        pub struct AddMeshError {
-            pub _address: u8,
-        }
-        pub const AddMeshError_Enum_Success: root::xatlas::AddMeshError_Enum = 0;
-        pub const AddMeshError_Enum_IndexOutOfRange: root::xatlas::AddMeshError_Enum = 1;
-        pub const AddMeshError_Enum_InvalidIndexCount: root::xatlas::AddMeshError_Enum = 2;
-        pub type AddMeshError_Enum = i32;
-        #[repr(C)]
-        #[derive(Debug, Copy, Clone)]
         pub struct IndexFormat {
             pub _address: u8,
         }
@@ -143,6 +134,15 @@ pub mod root {
             pub indexFormat: root::xatlas::IndexFormat_Enum,
             pub faceIgnoreData: *const bool,
         }
+        #[repr(C)]
+        #[derive(Debug, Copy, Clone)]
+        pub struct AddMeshError {
+            pub _address: u8,
+        }
+        pub const AddMeshError_Enum_Success: root::xatlas::AddMeshError_Enum = 0;
+        pub const AddMeshError_Enum_IndexOutOfRange: root::xatlas::AddMeshError_Enum = 1;
+        pub const AddMeshError_Enum_InvalidIndexCount: root::xatlas::AddMeshError_Enum = 2;
+        pub type AddMeshError_Enum = i32;
         extern "C" {
             #[link_name = "\u{1}?AddMesh@xatlas@@YA?AW4Enum@AddMeshError@1@PEAUAtlas@1@AEBUMeshDecl@1@@Z"]
             pub fn AddMesh(
@@ -170,16 +170,25 @@ pub mod root {
         #[repr(C)]
         #[derive(Debug, Copy, Clone)]
         pub struct ChartOptions {
+            pub maxChartArea: f32,
+            pub maxBoundaryLength: f32,
             pub proxyFitMetricWeight: f32,
             pub roundnessMetricWeight: f32,
             pub straightnessMetricWeight: f32,
             pub normalSeamMetricWeight: f32,
             pub textureSeamMetricWeight: f32,
-            pub maxChartArea: f32,
-            pub maxBoundaryLength: f32,
             pub maxThreshold: f32,
             pub growFaceCount: u32,
             pub maxIterations: u32,
+        }
+        extern "C" {
+            #[link_name = "\u{1}?ComputeCharts@xatlas@@YAXPEAUAtlas@1@UChartOptions@1@P6AXW4Enum@ProgressCategory@1@HPEAX@Z3@Z"]
+            pub fn ComputeCharts(
+                atlas: *mut root::xatlas::Atlas,
+                chartOptions: root::xatlas::ChartOptions,
+                progressFunc: root::xatlas::ProgressFunc,
+                progressUserData: *mut ::std::os::raw::c_void,
+            );
         }
         pub type ParameterizeFunc = ::std::option::Option<
             unsafe extern "C" fn(
@@ -191,37 +200,6 @@ pub mod root {
                 isPlanar: bool,
             ),
         >;
-        #[repr(C)]
-        #[derive(Debug, Copy, Clone)]
-        pub struct PackOptions {
-            pub attempts: ::std::os::raw::c_int,
-            pub texelsPerUnit: f32,
-            pub resolution: u32,
-            pub maxChartSize: u32,
-            pub blockAlign: bool,
-            pub conservative: bool,
-            pub padding: ::std::os::raw::c_int,
-        }
-        extern "C" {
-            #[link_name = "\u{1}?Generate@xatlas@@YAXPEAUAtlas@1@UChartOptions@1@P6AXPEBMPEAMIPEBII_N@ZUPackOptions@1@P6AXW4Enum@ProgressCategory@1@HPEAX@Z9@Z"]
-            pub fn Generate(
-                atlas: *mut root::xatlas::Atlas,
-                chartOptions: root::xatlas::ChartOptions,
-                paramFunc: root::xatlas::ParameterizeFunc,
-                packOptions: root::xatlas::PackOptions,
-                progressFunc: root::xatlas::ProgressFunc,
-                progressUserData: *mut ::std::os::raw::c_void,
-            );
-        }
-        extern "C" {
-            #[link_name = "\u{1}?ComputeCharts@xatlas@@YAXPEAUAtlas@1@UChartOptions@1@P6AXW4Enum@ProgressCategory@1@HPEAX@Z3@Z"]
-            pub fn ComputeCharts(
-                atlas: *mut root::xatlas::Atlas,
-                chartOptions: root::xatlas::ChartOptions,
-                progressFunc: root::xatlas::ProgressFunc,
-                progressUserData: *mut ::std::os::raw::c_void,
-            );
-        }
         extern "C" {
             #[link_name = "\u{1}?ParameterizeCharts@xatlas@@YAXPEAUAtlas@1@P6AXPEBMPEAMIPEBII_N@ZP6AXW4Enum@ProgressCategory@1@HPEAX@Z7@Z"]
             pub fn ParameterizeCharts(
@@ -231,10 +209,32 @@ pub mod root {
                 progressUserData: *mut ::std::os::raw::c_void,
             );
         }
+        #[repr(C)]
+        #[derive(Debug, Copy, Clone)]
+        pub struct PackOptions {
+            pub attempts: ::std::os::raw::c_int,
+            pub texelsPerUnit: f32,
+            pub resolution: u32,
+            pub maxChartSize: u32,
+            pub blockAlign: bool,
+            pub conservative: bool,
+            pub padding: u32,
+        }
         extern "C" {
             #[link_name = "\u{1}?PackCharts@xatlas@@YAXPEAUAtlas@1@UPackOptions@1@P6AXW4Enum@ProgressCategory@1@HPEAX@Z3@Z"]
             pub fn PackCharts(
                 atlas: *mut root::xatlas::Atlas,
+                packOptions: root::xatlas::PackOptions,
+                progressFunc: root::xatlas::ProgressFunc,
+                progressUserData: *mut ::std::os::raw::c_void,
+            );
+        }
+        extern "C" {
+            #[link_name = "\u{1}?Generate@xatlas@@YAXPEAUAtlas@1@UChartOptions@1@P6AXPEBMPEAMIPEBII_N@ZUPackOptions@1@P6AXW4Enum@ProgressCategory@1@HPEAX@Z9@Z"]
+            pub fn Generate(
+                atlas: *mut root::xatlas::Atlas,
+                chartOptions: root::xatlas::ChartOptions,
+                paramFunc: root::xatlas::ParameterizeFunc,
                 packOptions: root::xatlas::PackOptions,
                 progressFunc: root::xatlas::ProgressFunc,
                 progressUserData: *mut ::std::os::raw::c_void,

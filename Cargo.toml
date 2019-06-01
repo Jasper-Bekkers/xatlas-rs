@@ -12,6 +12,7 @@ keywords = ["rendering", "uv", "unwrap", "xatlas"]
 categories = ["rendering"]
 include = [
     "src/*.rs",
+    "build.rs",
     "Cargo.toml",
 ]
 documentation = "https://docs.rs/xatlas-rs"

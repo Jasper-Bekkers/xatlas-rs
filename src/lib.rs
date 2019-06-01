@@ -50,16 +50,16 @@ pub struct MeshDecl<'a> {
 
 #[derive(Debug)]
 pub struct ChartOptions {
-    proxy_fit_metric_weight: f32,
-    roundness_metric_weight: f32,
-    straightness_metric_weight: f32,
-    normal_seam_metric_weight: f32,
-    texture_seam_metric_weight: f32,
-    max_chart_area: f32,
-    max_boundary_length: f32,
-    max_threshold: f32,
-    grow_face_count: u32,
-    max_iterations: u32,
+    pub proxy_fit_metric_weight: f32,
+    pub roundness_metric_weight: f32,
+    pub straightness_metric_weight: f32,
+    pub normal_seam_metric_weight: f32,
+    pub texture_seam_metric_weight: f32,
+    pub max_chart_area: f32,
+    pub max_boundary_length: f32,
+    pub max_threshold: f32,
+    pub grow_face_count: u32,
+    pub max_iterations: u32,
 }
 
 impl ChartOptions {

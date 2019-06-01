@@ -15,7 +15,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-xatlas-rs = "0.1.1"
+xatlas-rs = "0.1.2"
 ```
 
 ## License

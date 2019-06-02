@@ -28,7 +28,7 @@ pub enum ProgressCategory {
     ComputeCharts,
     ParameterizeCharts,
     PackCharts,
-    BuildOutputMeshes
+    BuildOutputMeshes,
 }
 
 #[repr(C)]
@@ -145,7 +145,7 @@ pub struct Chart<'a> {
 #[derive(Debug)]
 pub struct Vertex {
     pub atlas_index: u32,
-    pub uv: [f32;2],
+    pub uv: [f32; 2],
     pub xref: u32,
 }
 
@@ -169,12 +169,15 @@ unsafe extern "C" fn progress_cb(
     let cb: *mut &mut FnMut(ProgressCategory, i32) = unsafe { std::mem::transmute(user_data) };
 
     #[allow(non_snake_case)]
-    (*cb)(match category {
-        ProgressCategory_Enum_ComputeCharts => ProgressCategory::ComputeCharts,
-        ProgressCategory_Enum_ParameterizeCharts => ProgressCategory::ParameterizeCharts,
-        ProgressCategory_Enum_PackCharts => ProgressCategory::PackCharts,
-        ProgressCategory_Enum_BuildOutputMeshes => ProgressCategory::BuildOutputMeshes,
-    }, progress);
+    (*cb)(
+        match category {
+            ProgressCategory_Enum_ComputeCharts => ProgressCategory::ComputeCharts,
+            ProgressCategory_Enum_ParameterizeCharts => ProgressCategory::ParameterizeCharts,
+            ProgressCategory_Enum_PackCharts => ProgressCategory::PackCharts,
+            ProgressCategory_Enum_BuildOutputMeshes => ProgressCategory::BuildOutputMeshes,
+        },
+        progress,
+    );
 }
 
 impl<'a> Xatlas {
@@ -224,7 +227,7 @@ impl<'a> Xatlas {
         }
     }
 
-    pub fn generate_simple(&self, chart_opts: ChartOptions, pack_opts: PackOptions){
+    pub fn generate_simple(&self, chart_opts: ChartOptions, pack_opts: PackOptions) {
         let chart_opts = chart_opts.convert();
         let pack_opts = pack_opts.convert();
 
@@ -240,7 +243,7 @@ impl<'a> Xatlas {
         }
     }
 
-    pub fn generate<F>(&self, chart_opts: ChartOptions, pack_opts: PackOptions, mut progress: F) 
+    pub fn generate<F>(&self, chart_opts: ChartOptions, pack_opts: PackOptions, mut progress: F)
     where
         F: FnMut(ProgressCategory, i32),
     {
@@ -257,7 +260,7 @@ impl<'a> Xatlas {
                 None,
                 pack_opts,
                 Some(progress_cb),
-                cb
+                cb,
             )
         }
     }
@@ -270,29 +273,41 @@ impl<'a> Xatlas {
             std::slice::from_raw_parts((*self.handle).meshes, (*self.handle).meshCount as usize)
         };
 
-        for original_mesh  in original_meshes {
+        for original_mesh in original_meshes {
             let mut charts = vec![];
             let original_charts = unsafe {
-                std::slice::from_raw_parts(original_mesh.chartArray, original_mesh.chartCount as usize)
+                std::slice::from_raw_parts(
+                    original_mesh.chartArray,
+                    original_mesh.chartCount as usize,
+                )
             };
 
             for original_chart in original_charts {
-                charts.push(Chart{
+                charts.push(Chart {
                     atlas_index: original_chart.atlasIndex,
                     indices: unsafe {
-                        std::slice::from_raw_parts(original_chart.indexArray, original_chart.indexCount as usize)
+                        std::slice::from_raw_parts(
+                            original_chart.indexArray,
+                            original_chart.indexCount as usize,
+                        )
                     },
                 })
             }
 
             meshes.push(Mesh {
                 indices: unsafe {
-                    std::slice::from_raw_parts(original_mesh.indexArray, original_mesh.indexCount as usize)
+                    std::slice::from_raw_parts(
+                        original_mesh.indexArray,
+                        original_mesh.indexCount as usize,
+                    )
                 },
                 vertices: unsafe {
-                    std::slice::from_raw_parts(original_mesh.vertexArray as *mut _ as *mut _, original_mesh.vertexCount as usize)
+                    std::slice::from_raw_parts(
+                        original_mesh.vertexArray as *mut _ as *mut _,
+                        original_mesh.vertexCount as usize,
+                    )
                 },
-                charts
+                charts,
             });
         }
 

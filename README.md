@@ -1,5 +1,6 @@
 xatlas-rs
 ========
+[![travis-ci.com](https://travis-ci.com/Jasper-Bekkers/xatlas-rs.svg?branch=master)](https://travis-ci.com/Jasper-Bekkers/xatlas-rs)
 [![Latest version](https://img.shields.io/crates/v/xatlas-rs.svg)](https://crates.io/crates/xatlas-rs)
 [![Documentation](https://docs.rs/xatlas-rs/badge.svg)](https://docs.rs/xatlas-rs)
 [![](https://tokei.rs/b1/github/Jasper-Bekkers/xatlas-rs)](https://github.com/Jasper-Bekkers/xatlas-rs)

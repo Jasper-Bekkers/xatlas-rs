@@ -20,6 +20,9 @@ include = [
 documentation = "https://docs.rs/xatlas-rs"
 description = "Rust wrapper for the xatlas library"
 
+[badges]
+maintenance = { status = "actively-developed" }
+
 [dependencies]
 
 [features]

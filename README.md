@@ -7,7 +7,13 @@ xatlas-rs
 
 This crate is a wrapper around the [xatlas](https://github.com/jpcy/xatlas) library.
 
+A cleaned up version of [thekla_atlas](https://github.com/Thekla/thekla_atlas).
+
+Mesh charting, parameterization and atlas packing. Suitable for generating unique texture coordinates for baking lightmaps.
+
 - [Documentation](https://docs.rs/xatlas-rs)
+
+[![](readme/xatlas.png)](readme/xatlas)
 
 ## Usage
 

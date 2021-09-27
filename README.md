@@ -14,7 +14,7 @@ Mesh charting, parameterization and atlas packing. Suitable for generating uniqu
 
 - [Documentation](https://docs.rs/xatlas-rs)
 
-[![Sample](readme/xatlas.png)](readme/xatlas.png?raw=true Sample)
+![Sample](readme/xatlas.png)
 
 ## Usage
 

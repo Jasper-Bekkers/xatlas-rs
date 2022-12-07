@@ -32,14 +32,12 @@ fn main() {
 
     build.compile("xatlas");
 
-    #[cfg(feature = "generate_bindings")]
     generate_bindings("src/bindings.rs")
 }
 
-#[cfg(feature = "generate_bindings")]
 fn generate_bindings(output_file: &str) {
-    let bindings = bindgen::Builder::default()
-        .header("vendor/xatlas.h")
+    let bindings = bindgen::builder()
+        .header("header.h")
         .enable_cxx_namespaces()
         .rustfmt_bindings(true)
         .clang_args(&["-xc++", "-std=c++11"])
@@ -51,6 +49,3 @@ fn generate_bindings(output_file: &str) {
         .write_to_file(std::path::Path::new(output_file))
         .expect("Unable to write bindings!");
 }
-
-#[cfg(not(feature = "generate_bindings"))]
-fn generate_bindings(_: &str) {}

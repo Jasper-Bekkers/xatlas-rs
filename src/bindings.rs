@@ -4,65 +4,245 @@
 pub mod root {
     #[allow(unused_imports)]
     use self::super::root;
-    pub const _SAL_VERSION: u32 = 20;
-    pub const __SAL_H_VERSION: u32 = 180000000;
-    pub const _USE_DECLSPECS_FOR_SAL: u32 = 0;
-    pub const _USE_ATTRIBUTES_FOR_SAL: u32 = 0;
-    pub const _CRT_PACKING: u32 = 8;
-    pub const _HAS_EXCEPTIONS: u32 = 1;
-    pub const NULL: u32 = 0;
-    pub const WCHAR_MIN: u32 = 0;
-    pub const WCHAR_MAX: u32 = 65535;
+    pub const _STDINT_H: u32 = 1;
+    pub const _FEATURES_H: u32 = 1;
+    pub const _ISOC95_SOURCE: u32 = 1;
+    pub const _ISOC99_SOURCE: u32 = 1;
+    pub const _ISOC11_SOURCE: u32 = 1;
+    pub const _ISOC2X_SOURCE: u32 = 1;
+    pub const _POSIX_SOURCE: u32 = 1;
+    pub const _POSIX_C_SOURCE: u32 = 200809;
+    pub const _XOPEN_SOURCE: u32 = 700;
+    pub const _XOPEN_SOURCE_EXTENDED: u32 = 1;
+    pub const _LARGEFILE64_SOURCE: u32 = 1;
+    pub const _DEFAULT_SOURCE: u32 = 1;
+    pub const _ATFILE_SOURCE: u32 = 1;
+    pub const _DYNAMIC_STACK_SIZE_SOURCE: u32 = 1;
+    pub const __GLIBC_USE_ISOC2X: u32 = 1;
+    pub const __USE_ISOC11: u32 = 1;
+    pub const __USE_ISOC99: u32 = 1;
+    pub const __USE_ISOC95: u32 = 1;
+    pub const __USE_ISOCXX11: u32 = 1;
+    pub const __USE_POSIX: u32 = 1;
+    pub const __USE_POSIX2: u32 = 1;
+    pub const __USE_POSIX199309: u32 = 1;
+    pub const __USE_POSIX199506: u32 = 1;
+    pub const __USE_XOPEN2K: u32 = 1;
+    pub const __USE_XOPEN2K8: u32 = 1;
+    pub const __USE_XOPEN: u32 = 1;
+    pub const __USE_XOPEN_EXTENDED: u32 = 1;
+    pub const __USE_UNIX98: u32 = 1;
+    pub const _LARGEFILE_SOURCE: u32 = 1;
+    pub const __USE_XOPEN2K8XSI: u32 = 1;
+    pub const __USE_XOPEN2KXSI: u32 = 1;
+    pub const __USE_LARGEFILE: u32 = 1;
+    pub const __USE_LARGEFILE64: u32 = 1;
+    pub const __WORDSIZE: u32 = 64;
+    pub const __WORDSIZE_TIME64_COMPAT32: u32 = 1;
+    pub const __SYSCALL_WORDSIZE: u32 = 64;
+    pub const __TIMESIZE: u32 = 64;
+    pub const __USE_MISC: u32 = 1;
+    pub const __USE_ATFILE: u32 = 1;
+    pub const __USE_DYNAMIC_STACK_SIZE: u32 = 1;
+    pub const __USE_GNU: u32 = 1;
+    pub const __USE_FORTIFY_LEVEL: u32 = 0;
+    pub const __GLIBC_USE_DEPRECATED_GETS: u32 = 1;
+    pub const __GLIBC_USE_DEPRECATED_SCANF: u32 = 0;
+    pub const _STDC_PREDEF_H: u32 = 1;
+    pub const __STDC_IEC_559__: u32 = 1;
+    pub const __STDC_IEC_60559_BFP__: u32 = 201404;
+    pub const __STDC_IEC_559_COMPLEX__: u32 = 1;
+    pub const __STDC_IEC_60559_COMPLEX__: u32 = 201404;
+    pub const __STDC_ISO_10646__: u32 = 201706;
+    pub const __GNU_LIBRARY__: u32 = 6;
+    pub const __GLIBC__: u32 = 2;
+    pub const __GLIBC_MINOR__: u32 = 36;
+    pub const _SYS_CDEFS_H: u32 = 1;
+    pub const __glibc_c99_flexarr_available: u32 = 1;
+    pub const __LDOUBLE_REDIRECTS_TO_FLOAT128_ABI: u32 = 0;
+    pub const __HAVE_GENERIC_SELECTION: u32 = 0;
+    pub const __GLIBC_USE_LIB_EXT2: u32 = 1;
+    pub const __GLIBC_USE_IEC_60559_BFP_EXT: u32 = 1;
+    pub const __GLIBC_USE_IEC_60559_BFP_EXT_C2X: u32 = 1;
+    pub const __GLIBC_USE_IEC_60559_EXT: u32 = 1;
+    pub const __GLIBC_USE_IEC_60559_FUNCS_EXT: u32 = 1;
+    pub const __GLIBC_USE_IEC_60559_FUNCS_EXT_C2X: u32 = 1;
+    pub const __GLIBC_USE_IEC_60559_TYPES_EXT: u32 = 1;
+    pub const _BITS_TYPES_H: u32 = 1;
+    pub const _BITS_TYPESIZES_H: u32 = 1;
+    pub const __OFF_T_MATCHES_OFF64_T: u32 = 1;
+    pub const __INO_T_MATCHES_INO64_T: u32 = 1;
+    pub const __RLIM_T_MATCHES_RLIM64_T: u32 = 1;
+    pub const __STATFS_MATCHES_STATFS64: u32 = 1;
+    pub const __KERNEL_OLD_TIMEVAL_MATCHES_TIMEVAL64: u32 = 1;
+    pub const __FD_SETSIZE: u32 = 1024;
+    pub const _BITS_TIME64_H: u32 = 1;
+    pub const _BITS_WCHAR_H: u32 = 1;
+    pub const _BITS_STDINT_INTN_H: u32 = 1;
+    pub const _BITS_STDINT_UINTN_H: u32 = 1;
+    pub const INT8_MIN: i32 = -128;
+    pub const INT16_MIN: i32 = -32768;
+    pub const INT32_MIN: i32 = -2147483648;
+    pub const INT8_MAX: u32 = 127;
+    pub const INT16_MAX: u32 = 32767;
+    pub const INT32_MAX: u32 = 2147483647;
+    pub const UINT8_MAX: u32 = 255;
+    pub const UINT16_MAX: u32 = 65535;
+    pub const UINT32_MAX: u32 = 4294967295;
+    pub const INT_LEAST8_MIN: i32 = -128;
+    pub const INT_LEAST16_MIN: i32 = -32768;
+    pub const INT_LEAST32_MIN: i32 = -2147483648;
+    pub const INT_LEAST8_MAX: u32 = 127;
+    pub const INT_LEAST16_MAX: u32 = 32767;
+    pub const INT_LEAST32_MAX: u32 = 2147483647;
+    pub const UINT_LEAST8_MAX: u32 = 255;
+    pub const UINT_LEAST16_MAX: u32 = 65535;
+    pub const UINT_LEAST32_MAX: u32 = 4294967295;
+    pub const INT_FAST8_MIN: i32 = -128;
+    pub const INT_FAST16_MIN: i64 = -9223372036854775808;
+    pub const INT_FAST32_MIN: i64 = -9223372036854775808;
+    pub const INT_FAST8_MAX: u32 = 127;
+    pub const INT_FAST16_MAX: u64 = 9223372036854775807;
+    pub const INT_FAST32_MAX: u64 = 9223372036854775807;
+    pub const UINT_FAST8_MAX: u32 = 255;
+    pub const UINT_FAST16_MAX: i32 = -1;
+    pub const UINT_FAST32_MAX: i32 = -1;
+    pub const INTPTR_MIN: i64 = -9223372036854775808;
+    pub const INTPTR_MAX: u64 = 9223372036854775807;
+    pub const UINTPTR_MAX: i32 = -1;
+    pub const PTRDIFF_MIN: i64 = -9223372036854775808;
+    pub const PTRDIFF_MAX: u64 = 9223372036854775807;
+    pub const SIG_ATOMIC_MIN: i32 = -2147483648;
+    pub const SIG_ATOMIC_MAX: u32 = 2147483647;
+    pub const SIZE_MAX: i32 = -1;
     pub const WINT_MIN: u32 = 0;
-    pub const WINT_MAX: u32 = 65535;
-    pub type va_list = *mut ::std::os::raw::c_char;
-    extern "C" {
-        pub fn __va_start(arg1: *mut root::va_list, ...);
+    pub const WINT_MAX: u32 = 4294967295;
+    pub const INT8_WIDTH: u32 = 8;
+    pub const UINT8_WIDTH: u32 = 8;
+    pub const INT16_WIDTH: u32 = 16;
+    pub const UINT16_WIDTH: u32 = 16;
+    pub const INT32_WIDTH: u32 = 32;
+    pub const UINT32_WIDTH: u32 = 32;
+    pub const INT64_WIDTH: u32 = 64;
+    pub const UINT64_WIDTH: u32 = 64;
+    pub const INT_LEAST8_WIDTH: u32 = 8;
+    pub const UINT_LEAST8_WIDTH: u32 = 8;
+    pub const INT_LEAST16_WIDTH: u32 = 16;
+    pub const UINT_LEAST16_WIDTH: u32 = 16;
+    pub const INT_LEAST32_WIDTH: u32 = 32;
+    pub const UINT_LEAST32_WIDTH: u32 = 32;
+    pub const INT_LEAST64_WIDTH: u32 = 64;
+    pub const UINT_LEAST64_WIDTH: u32 = 64;
+    pub const INT_FAST8_WIDTH: u32 = 8;
+    pub const UINT_FAST8_WIDTH: u32 = 8;
+    pub const INT_FAST16_WIDTH: u32 = 64;
+    pub const UINT_FAST16_WIDTH: u32 = 64;
+    pub const INT_FAST32_WIDTH: u32 = 64;
+    pub const UINT_FAST32_WIDTH: u32 = 64;
+    pub const INT_FAST64_WIDTH: u32 = 64;
+    pub const UINT_FAST64_WIDTH: u32 = 64;
+    pub const INTPTR_WIDTH: u32 = 64;
+    pub const UINTPTR_WIDTH: u32 = 64;
+    pub const INTMAX_WIDTH: u32 = 64;
+    pub const UINTMAX_WIDTH: u32 = 64;
+    pub const PTRDIFF_WIDTH: u32 = 64;
+    pub const SIG_ATOMIC_WIDTH: u32 = 32;
+    pub const SIZE_WIDTH: u32 = 64;
+    pub const WCHAR_WIDTH: u32 = 32;
+    pub const WINT_WIDTH: u32 = 32;
+    #[repr(C)]
+    #[repr(align(16))]
+    #[derive(Debug, Copy, Clone)]
+    pub struct max_align_t {
+        pub __clang_max_align_nonce1: ::std::os::raw::c_longlong,
+        pub __bindgen_padding_0: u64,
+        pub __clang_max_align_nonce2: u128,
     }
+    pub type __u_char = ::std::os::raw::c_uchar;
+    pub type __u_short = ::std::os::raw::c_ushort;
+    pub type __u_int = ::std::os::raw::c_uint;
+    pub type __u_long = ::std::os::raw::c_ulong;
+    pub type __int8_t = ::std::os::raw::c_schar;
+    pub type __uint8_t = ::std::os::raw::c_uchar;
+    pub type __int16_t = ::std::os::raw::c_short;
+    pub type __uint16_t = ::std::os::raw::c_ushort;
+    pub type __int32_t = ::std::os::raw::c_int;
+    pub type __uint32_t = ::std::os::raw::c_uint;
+    pub type __int64_t = ::std::os::raw::c_long;
+    pub type __uint64_t = ::std::os::raw::c_ulong;
+    pub type __int_least8_t = root::__int8_t;
+    pub type __uint_least8_t = root::__uint8_t;
+    pub type __int_least16_t = root::__int16_t;
+    pub type __uint_least16_t = root::__uint16_t;
+    pub type __int_least32_t = root::__int32_t;
+    pub type __uint_least32_t = root::__uint32_t;
+    pub type __int_least64_t = root::__int64_t;
+    pub type __uint_least64_t = root::__uint64_t;
+    pub type __quad_t = ::std::os::raw::c_long;
+    pub type __u_quad_t = ::std::os::raw::c_ulong;
+    pub type __intmax_t = ::std::os::raw::c_long;
+    pub type __uintmax_t = ::std::os::raw::c_ulong;
+    pub type __dev_t = ::std::os::raw::c_ulong;
+    pub type __uid_t = ::std::os::raw::c_uint;
+    pub type __gid_t = ::std::os::raw::c_uint;
+    pub type __ino_t = ::std::os::raw::c_ulong;
+    pub type __ino64_t = ::std::os::raw::c_ulong;
+    pub type __mode_t = ::std::os::raw::c_uint;
+    pub type __nlink_t = ::std::os::raw::c_ulong;
+    pub type __off_t = ::std::os::raw::c_long;
+    pub type __off64_t = ::std::os::raw::c_long;
+    pub type __pid_t = ::std::os::raw::c_int;
     #[repr(C)]
     #[derive(Debug, Copy, Clone)]
-    pub struct __vcrt_va_list_is_reference {
-        pub _address: u8,
+    pub struct __fsid_t {
+        pub __val: [::std::os::raw::c_int; 2usize],
     }
-    pub const __vcrt_va_list_is_reference___the_value:
-        root::__vcrt_va_list_is_reference__bindgen_ty_1 = 0;
-    pub type __vcrt_va_list_is_reference__bindgen_ty_1 = u8;
-    #[repr(C)]
-    #[derive(Debug, Copy, Clone)]
-    pub struct __vcrt_assert_va_start_is_not_reference {
-        pub _address: u8,
-    }
-    pub type __vcrt_bool = bool;
-    extern "C" {
-        pub fn __security_init_cookie();
-    }
-    extern "C" {
-        pub fn __security_check_cookie(_StackCookie: usize);
-    }
-    extern "C" {
-        pub fn __report_gsfailure(_StackCookie: usize);
-    }
-    extern "C" {
-        pub static mut __security_cookie: usize;
-    }
-    pub type int_least8_t = ::std::os::raw::c_schar;
-    pub type int_least16_t = ::std::os::raw::c_short;
-    pub type int_least32_t = ::std::os::raw::c_int;
-    pub type int_least64_t = ::std::os::raw::c_longlong;
-    pub type uint_least8_t = ::std::os::raw::c_uchar;
-    pub type uint_least16_t = ::std::os::raw::c_ushort;
-    pub type uint_least32_t = ::std::os::raw::c_uint;
-    pub type uint_least64_t = ::std::os::raw::c_ulonglong;
+    pub type __clock_t = ::std::os::raw::c_long;
+    pub type __rlim_t = ::std::os::raw::c_ulong;
+    pub type __rlim64_t = ::std::os::raw::c_ulong;
+    pub type __id_t = ::std::os::raw::c_uint;
+    pub type __time_t = ::std::os::raw::c_long;
+    pub type __useconds_t = ::std::os::raw::c_uint;
+    pub type __suseconds_t = ::std::os::raw::c_long;
+    pub type __suseconds64_t = ::std::os::raw::c_long;
+    pub type __daddr_t = ::std::os::raw::c_int;
+    pub type __key_t = ::std::os::raw::c_int;
+    pub type __clockid_t = ::std::os::raw::c_int;
+    pub type __timer_t = *mut ::std::os::raw::c_void;
+    pub type __blksize_t = ::std::os::raw::c_long;
+    pub type __blkcnt_t = ::std::os::raw::c_long;
+    pub type __blkcnt64_t = ::std::os::raw::c_long;
+    pub type __fsblkcnt_t = ::std::os::raw::c_ulong;
+    pub type __fsblkcnt64_t = ::std::os::raw::c_ulong;
+    pub type __fsfilcnt_t = ::std::os::raw::c_ulong;
+    pub type __fsfilcnt64_t = ::std::os::raw::c_ulong;
+    pub type __fsword_t = ::std::os::raw::c_long;
+    pub type __ssize_t = ::std::os::raw::c_long;
+    pub type __syscall_slong_t = ::std::os::raw::c_long;
+    pub type __syscall_ulong_t = ::std::os::raw::c_ulong;
+    pub type __loff_t = root::__off64_t;
+    pub type __caddr_t = *mut ::std::os::raw::c_char;
+    pub type __intptr_t = ::std::os::raw::c_long;
+    pub type __socklen_t = ::std::os::raw::c_uint;
+    pub type __sig_atomic_t = ::std::os::raw::c_int;
+    pub type int_least8_t = root::__int_least8_t;
+    pub type int_least16_t = root::__int_least16_t;
+    pub type int_least32_t = root::__int_least32_t;
+    pub type int_least64_t = root::__int_least64_t;
+    pub type uint_least8_t = root::__uint_least8_t;
+    pub type uint_least16_t = root::__uint_least16_t;
+    pub type uint_least32_t = root::__uint_least32_t;
+    pub type uint_least64_t = root::__uint_least64_t;
     pub type int_fast8_t = ::std::os::raw::c_schar;
-    pub type int_fast16_t = ::std::os::raw::c_int;
-    pub type int_fast32_t = ::std::os::raw::c_int;
-    pub type int_fast64_t = ::std::os::raw::c_longlong;
+    pub type int_fast16_t = ::std::os::raw::c_long;
+    pub type int_fast32_t = ::std::os::raw::c_long;
+    pub type int_fast64_t = ::std::os::raw::c_long;
     pub type uint_fast8_t = ::std::os::raw::c_uchar;
-    pub type uint_fast16_t = ::std::os::raw::c_uint;
-    pub type uint_fast32_t = ::std::os::raw::c_uint;
-    pub type uint_fast64_t = ::std::os::raw::c_ulonglong;
-    pub type intmax_t = ::std::os::raw::c_longlong;
-    pub type uintmax_t = ::std::os::raw::c_ulonglong;
+    pub type uint_fast16_t = ::std::os::raw::c_ulong;
+    pub type uint_fast32_t = ::std::os::raw::c_ulong;
+    pub type uint_fast64_t = ::std::os::raw::c_ulong;
+    pub type intmax_t = root::__intmax_t;
+    pub type uintmax_t = root::__uintmax_t;
     pub mod xatlas {
         #[allow(unused_imports)]
         use self::super::super::root;
@@ -103,11 +283,11 @@ pub mod root {
             pub texelsPerUnit: f32,
         }
         extern "C" {
-            #[link_name = "\u{1}?Create@xatlas@@YAPEAUAtlas@1@XZ"]
+            #[link_name = "\u{1}_ZN6xatlas6CreateEv"]
             pub fn Create() -> *mut root::xatlas::Atlas;
         }
         extern "C" {
-            #[link_name = "\u{1}?Destroy@xatlas@@YAXPEAUAtlas@1@@Z"]
+            #[link_name = "\u{1}_ZN6xatlas7DestroyEPNS_5AtlasE"]
             pub fn Destroy(atlas: *mut root::xatlas::Atlas);
         }
         #[repr(C)]
@@ -117,7 +297,7 @@ pub mod root {
         }
         pub const IndexFormat_Enum_UInt16: root::xatlas::IndexFormat_Enum = 0;
         pub const IndexFormat_Enum_UInt32: root::xatlas::IndexFormat_Enum = 1;
-        pub type IndexFormat_Enum = i32;
+        pub type IndexFormat_Enum = u32;
         #[repr(C)]
         #[derive(Debug, Copy, Clone)]
         pub struct MeshDecl {
@@ -142,9 +322,9 @@ pub mod root {
         pub const AddMeshError_Enum_Success: root::xatlas::AddMeshError_Enum = 0;
         pub const AddMeshError_Enum_IndexOutOfRange: root::xatlas::AddMeshError_Enum = 1;
         pub const AddMeshError_Enum_InvalidIndexCount: root::xatlas::AddMeshError_Enum = 2;
-        pub type AddMeshError_Enum = i32;
+        pub type AddMeshError_Enum = u32;
         extern "C" {
-            #[link_name = "\u{1}?AddMesh@xatlas@@YA?AW4Enum@AddMeshError@1@PEAUAtlas@1@AEBUMeshDecl@1@@Z"]
+            #[link_name = "\u{1}_ZN6xatlas7AddMeshEPNS_5AtlasERKNS_8MeshDeclE"]
             pub fn AddMesh(
                 atlas: *mut root::xatlas::Atlas,
                 meshDecl: *const root::xatlas::MeshDecl,
@@ -159,7 +339,7 @@ pub mod root {
         pub const ProgressCategory_Enum_ParameterizeCharts: root::xatlas::ProgressCategory_Enum = 1;
         pub const ProgressCategory_Enum_PackCharts: root::xatlas::ProgressCategory_Enum = 2;
         pub const ProgressCategory_Enum_BuildOutputMeshes: root::xatlas::ProgressCategory_Enum = 3;
-        pub type ProgressCategory_Enum = i32;
+        pub type ProgressCategory_Enum = u32;
         pub type ProgressFunc = ::std::option::Option<
             unsafe extern "C" fn(
                 category: root::xatlas::ProgressCategory_Enum,
@@ -182,7 +362,7 @@ pub mod root {
             pub maxIterations: u32,
         }
         extern "C" {
-            #[link_name = "\u{1}?ComputeCharts@xatlas@@YAXPEAUAtlas@1@UChartOptions@1@P6AXW4Enum@ProgressCategory@1@HPEAX@Z3@Z"]
+            #[link_name = "\u{1}_ZN6xatlas13ComputeChartsEPNS_5AtlasENS_12ChartOptionsEPFvNS_16ProgressCategory4EnumEiPvES5_"]
             pub fn ComputeCharts(
                 atlas: *mut root::xatlas::Atlas,
                 chartOptions: root::xatlas::ChartOptions,
@@ -201,7 +381,7 @@ pub mod root {
             ),
         >;
         extern "C" {
-            #[link_name = "\u{1}?ParameterizeCharts@xatlas@@YAXPEAUAtlas@1@P6AXPEBMPEAMIPEBII_N@ZP6AXW4Enum@ProgressCategory@1@HPEAX@Z7@Z"]
+            #[link_name = "\u{1}_ZN6xatlas18ParameterizeChartsEPNS_5AtlasEPFvPKfPfjPKjjbEPFvNS_16ProgressCategory4EnumEiPvESB_"]
             pub fn ParameterizeCharts(
                 atlas: *mut root::xatlas::Atlas,
                 func: root::xatlas::ParameterizeFunc,
@@ -221,7 +401,7 @@ pub mod root {
             pub padding: u32,
         }
         extern "C" {
-            #[link_name = "\u{1}?PackCharts@xatlas@@YAXPEAUAtlas@1@UPackOptions@1@P6AXW4Enum@ProgressCategory@1@HPEAX@Z3@Z"]
+            #[link_name = "\u{1}_ZN6xatlas10PackChartsEPNS_5AtlasENS_11PackOptionsEPFvNS_16ProgressCategory4EnumEiPvES5_"]
             pub fn PackCharts(
                 atlas: *mut root::xatlas::Atlas,
                 packOptions: root::xatlas::PackOptions,
@@ -230,7 +410,7 @@ pub mod root {
             );
         }
         extern "C" {
-            #[link_name = "\u{1}?Generate@xatlas@@YAXPEAUAtlas@1@UChartOptions@1@P6AXPEBMPEAMIPEBII_N@ZUPackOptions@1@P6AXW4Enum@ProgressCategory@1@HPEAX@Z9@Z"]
+            #[link_name = "\u{1}_ZN6xatlas8GenerateEPNS_5AtlasENS_12ChartOptionsEPFvPKfPfjPKjjbENS_11PackOptionsEPFvNS_16ProgressCategory4EnumEiPvESD_"]
             pub fn Generate(
                 atlas: *mut root::xatlas::Atlas,
                 chartOptions: root::xatlas::ChartOptions,
@@ -247,24 +427,24 @@ pub mod root {
             ) -> *mut ::std::os::raw::c_void,
         >;
         extern "C" {
-            #[link_name = "\u{1}?SetRealloc@xatlas@@YAXP6APEAXPEAX_K@Z@Z"]
+            #[link_name = "\u{1}_ZN6xatlas10SetReallocEPFPvS0_mE"]
             pub fn SetRealloc(reallocFunc: root::xatlas::ReallocFunc);
         }
         pub type PrintFunc = ::std::option::Option<
             unsafe extern "C" fn(arg1: *const ::std::os::raw::c_char, ...) -> ::std::os::raw::c_int,
         >;
         extern "C" {
-            #[link_name = "\u{1}?SetPrint@xatlas@@YAXP6AHPEBDZZ_N@Z"]
+            #[link_name = "\u{1}_ZN6xatlas8SetPrintEPFiPKczEb"]
             pub fn SetPrint(print: root::xatlas::PrintFunc, verbose: bool);
         }
         extern "C" {
-            #[link_name = "\u{1}?StringForEnum@xatlas@@YAPEBDW4Enum@AddMeshError@1@@Z"]
+            #[link_name = "\u{1}_ZN6xatlas13StringForEnumENS_12AddMeshError4EnumE"]
             pub fn StringForEnum(
                 error: root::xatlas::AddMeshError_Enum,
             ) -> *const ::std::os::raw::c_char;
         }
         extern "C" {
-            #[link_name = "\u{1}?StringForEnum@xatlas@@YAPEBDW4Enum@ProgressCategory@1@@Z"]
+            #[link_name = "\u{1}_ZN6xatlas13StringForEnumENS_16ProgressCategory4EnumE"]
             pub fn StringForEnum1(
                 category: root::xatlas::ProgressCategory_Enum,
             ) -> *const ::std::os::raw::c_char;
